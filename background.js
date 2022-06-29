@@ -1,0 +1,3 @@
+// this is the background code...
+
+// listen for our browerAction to be clicked
