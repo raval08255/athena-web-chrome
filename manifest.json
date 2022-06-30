@@ -17,7 +17,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": [ "panel.js" ],
+      "resources": ["panel.js", "jsoneditor.min.css", "jsoneditor.min.js"],
       "matches": [ "https://*/*", "http://*/*" ]
     }
   ],
