@@ -6,6 +6,7 @@ function loadScript(name) {
 }
 
 (function() {
+	loadScript('xhr-intercept.js');
 	loadScript('jsoneditor.min.js');
 	loadScript('panel.js');
 })();
