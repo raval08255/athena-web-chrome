@@ -17,7 +17,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["panel.js", "jsoneditor.min.css", "jsoneditor.min.js", "xhr-intercept.js"],
+      "resources": ["panel.js", "jsoneditor.min.css", "jsoneditor.min.js", "network.js"],
       "matches": [ "https://*/*", "http://*/*" ]
     }
   ],
