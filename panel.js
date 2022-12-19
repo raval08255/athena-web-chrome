@@ -732,14 +732,15 @@
                                     }
                                 } else {
                                     var jsonEditorOptions = {
-                                        mode: 'view',
+                                        mode: 'text',
                                         navigationBar: false,
                                         search: false,
-                                        sortObjectKeys: true
+                                        sortObjectKeys: true,
+                                        statusBar: false,
                                     };
                                     var editor = new JSONEditor(container, jsonEditorOptions);
                                     editor.set(valueToLog);
-                                    editor.collapseAll();
+                                    // editor.collapseAll();
                                 }
                             } else if (className === 'log-value-dom') {
                                 var firstLineOfValueToLog = valueToLog.split('\n')[0];

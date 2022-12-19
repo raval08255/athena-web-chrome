@@ -21,6 +21,14 @@ div.jsoneditor .jsoneditor-search input{height:auto;border:inherit}div.jsonedito
 	MIT License
 */
 
+#console-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+}
+
 #console-panel .dev-tools-icon-container,
 #console-panel .dev-tools-icon-container *,
 #console-panel .dev-tools-console,
