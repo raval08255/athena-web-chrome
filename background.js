@@ -135,6 +135,6 @@ function handleTabChange(tabId, value = undefined) {
 	
 	chrome.tabs.onRemoved.addListener(function(tabid, removed) {
 		console.log("Removing entry for: ", tabid);
-		chrome.storage.local.remove(tabid);
+		chrome.storage.local.remove(`${tabid}`, () => null);
 	});
 })();
