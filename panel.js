@@ -1463,4 +1463,27 @@ function addToggleController() {
 	document.body.appendChild(disableIcon);
 }
 
+
+function addRestoreController() {
+	let disableIcon = document.createElement('div');
+	disableIcon.id = 'restore-console-panel-btn';
+	disableIcon.addEventListener('click', function (evt) {
+		const status = evt.target.getAttribute("data-status");
+		const tabId = evt.target.getAttribute("data-id");
+		
+		if (window.consolePanel.enabled && status === 'ACTIVATE_APP') {
+			const data = localStorage.getItem(tabId) || '';
+			document.getElementsByClassName('dev-tools-console-body')[0].innerHTML = data;
+		}
+		
+		 window.onbeforeunload = function() {
+			 let data = document.getElementsByClassName("dev-tools-console-body")[0].innerHTML;
+			 localStorage.setItem(tabId, data);
+		};
+	});
+
+	document.body.appendChild(disableIcon);
+}
+
+addRestoreController();
 addToggleController();
