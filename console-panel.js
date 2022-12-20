@@ -1,8 +1,12 @@
-function loadScript(name) {
+function loadScript(name, cb = undefined) {
 	const _script = document.createElement('script');
 	_script.setAttribute('src', chrome.runtime.getURL(name));
 	(document.head||document.documentElement).appendChild( _script  );
 	_script.parentNode.removeChild( _script);
+	
+	if (cb) {
+		setTimeout(cb, 1000);
+	}
 }
 
 (function() {
@@ -30,5 +34,24 @@ function loadScript(name) {
 	
 	loadScript('network.js');
 	loadScript('jsoneditor.min.js');
-	loadScript('panel.js');
+
+	loadScript('panel.js', () => {
+		chrome.runtime.sendMessage({ id: 'GET_TAB_STATE' }, function(response) {
+			const button = document.getElementById("toggle-console-panel-btn");
+
+			if (response === true) {
+				if (button) {
+					button.setAttribute("data-status", 'ACTIVATE_APP'); 
+					button.click();
+					chrome.runtime.sendMessage({ id: 'SET_TAB_STATE', value: true });
+				}
+			} else {
+				if (button) {
+					button.setAttribute("data-status", 'DEACTIVATE_APP'); 
+					button.click();
+					chrome.runtime.sendMessage({ id: 'SET_TAB_STATE', value: false });
+				}
+			}
+		});
+	});
 })();
