@@ -37,6 +37,16 @@ function sendDeactivationMessage(tabId) {
 }
 
 
+function getTabState(tabId, cb) {
+	chrome.storage.local.get(`${tabId}`, (val) => cb(val[tabId]));
+}
+
+
+function setTabState(tabId, value) {
+	chrome.storage.local.set({[`${tabId}`]: value}, () => null);
+}
+
+
 function getRulerActivationStatus(tabId,cb, value = undefined) {
 	if (!tabId) {
 		return cb(false);
@@ -78,6 +88,43 @@ function handleTabChange(tabId, value = undefined) {
 }
 
 (function () {
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if (request.id === 'TAB_ID') {
+			chrome.tabs.query({ active: true, currentWindow: true }, function (
+				tabs,
+			) {
+				sendResponse(tabs[0].id);
+			});
+		}
+		
+		if (request.id === 'GET_TAB_STATE') {
+			chrome.tabs.query({ active: true, currentWindow: true }, function (
+				tabs,
+			) {
+				getTabState(tabs[0].id, (val) => {
+					sendResponse(val);
+				});
+			});
+		}
+		
+		if (request.id === 'SET_TAB_STATE') {
+			chrome.tabs.query({ active: true, currentWindow: true }, function (
+				tabs,
+			) {
+				setTabState(tabs[0].id, request.value);
+				sendResponse(tabs[0].id);
+			});
+			
+			if (request.value === true) {
+				showEnabled();
+			} else {
+				showDisabled();
+			}
+		}
+
+		return true;
+	});
+	 
     chrome.action.onClicked.addListener((tab) => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (
             tabs,
@@ -85,12 +132,9 @@ function handleTabChange(tabId, value = undefined) {
             handleTabChange(tabs[0].id)
         });
     });
-
-    chrome.tabs.onActivated.addListener(({id}) => {
-        handleTabChange(id)
-      });
-
-      chrome.tabs.onUpdated.addListener(({id}) => {
-        handleTabChange(id, false);
-      });
+	
+	chrome.tabs.onRemoved.addListener(function(tabid, removed) {
+		console.log("Removing entry for: ", tabid);
+		chrome.storage.local.remove(tabid);
+	});
 })();
