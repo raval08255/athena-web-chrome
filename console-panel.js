@@ -38,11 +38,15 @@ function loadScript(name, cb = undefined) {
 	loadScript('panel.js', () => {
 		chrome.runtime.sendMessage({ id: 'GET_TAB_STATE' }, function(response) {
 			const button = document.getElementById("toggle-console-panel-btn");
+			const restoreButton = document.getElementById("restore-console-panel-btn");
 
-			if (response === true) {
+			if (response.value === true) {
 				if (button) {
 					button.setAttribute("data-status", 'ACTIVATE_APP'); 
+					restoreButton.setAttribute("data-status", 'ACTIVATE_APP'); 
+					restoreButton.setAttribute("data-id", response.id);
 					button.click();
+					restoreButton.click();
 					chrome.runtime.sendMessage({ id: 'SET_TAB_STATE', value: true });
 				}
 			} else {
