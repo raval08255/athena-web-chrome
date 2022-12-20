@@ -13,7 +13,8 @@
 	}
   ],
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "web_accessible_resources": [
     {
@@ -22,14 +23,7 @@
     }
   ],
   "host_permissions": ["<all_urls>"],
-  "action": {
-	"default_icon": {
-      "16": "/images/icon.png",
-      "32": "/images/icon.png",
-      "48": "/images/icon.png",
-      "128": "/images/icon.png"
-    }
-  },
+  "action": {},
   "icons": {
     "16": "/images/icon.png",
     "32": "/images/icon.png",
