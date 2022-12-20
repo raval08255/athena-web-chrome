@@ -102,7 +102,7 @@ function handleTabChange(tabId, value = undefined) {
 				tabs,
 			) {
 				getTabState(tabs[0].id, (val) => {
-					sendResponse(val);
+					sendResponse({ value: val, id: tabs[0].id });
 				});
 			});
 		}
@@ -112,7 +112,7 @@ function handleTabChange(tabId, value = undefined) {
 				tabs,
 			) {
 				setTabState(tabs[0].id, request.value);
-				sendResponse(tabs[0].id);
+				sendResponse({ value: request.value, id: tabs[0].id });
 			});
 			
 			if (request.value === true) {
