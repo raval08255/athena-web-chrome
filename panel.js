@@ -736,11 +736,10 @@
                                         navigationBar: false,
                                         search: false,
                                         sortObjectKeys: true,
-                                        statusBar: false,
+					statusBar: false,
                                     };
                                     var editor = new JSONEditor(container, jsonEditorOptions);
                                     editor.set(valueToLog);
-                                    // editor.collapseAll();
                                 }
                             } else if (className === 'log-value-dom') {
                                 var firstLineOfValueToLog = valueToLog.split('\n')[0];
@@ -1439,6 +1438,29 @@
 	ready(function () {
 		const panel = new ConsolePanel();
 		window.consolePanel = panel;
-		panel.enable();
+		// panel.enable();
 	});
 }(window.jQuery));
+
+
+function addToggleController() {
+	let disableIcon = document.createElement('div');
+	disableIcon.id = 'toggle-console-panel-btn';
+	disableIcon.addEventListener('click', function (evt) {
+		const status = evt.target.getAttribute("data-status");
+		
+		if (window.consolePanel.enabled && status === 'DEACTIVATE_APP') {
+			window.consolePanel.disable();
+			window.consolePanel.hideConsolePanel();
+			window.consolePanel.hideDevToolsIconContainer();
+		}
+		
+		if (status === 'ACTIVATE_APP'){
+			window.consolePanel.enable();
+		}
+	});
+
+	document.body.appendChild(disableIcon);
+}
+
+addToggleController();
